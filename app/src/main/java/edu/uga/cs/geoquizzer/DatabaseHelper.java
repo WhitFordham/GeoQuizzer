@@ -4,10 +4,15 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-public class QuizDatabase extends SQLiteOpenHelper {
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "quizInformation.db";
     private static final int DATABASE_VERSION = 1;
-    private static QuizDatabase databaseInstance;
+    private static DatabaseHelper databaseInstance;
     public static final String TABLE_COUNTRIES = "countries";
     public static final String COUNTRIES_COLUMN_ID = "_id";
     public static final String COUNTRIES_COLUMN_NAME = "name";
@@ -25,16 +30,16 @@ public class QuizDatabase extends SQLiteOpenHelper {
 
     public static final String CREATE_QUIZZES = "create table " + TABLE_QUIZZES + " ("
             + QUIZ_COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-            + QUIZ_COLUMN_DATE + " INTEGER, "
+            + QUIZ_COLUMN_DATE + " TEXT, "
             + QUIZ_COLUMN_RESULTS + " TEXT" + ")";
 
-    private QuizDatabase(Context context) {
+    private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
-    public static synchronized QuizDatabase getInstance(Context context) {
+    public static synchronized DatabaseHelper getInstance(Context context) {
         if (databaseInstance == null) {
-            databaseInstance = new QuizDatabase(context.getApplicationContext());
+            databaseInstance = new DatabaseHelper(context.getApplicationContext());
         }
 
         return databaseInstance;
@@ -53,5 +58,8 @@ public class QuizDatabase extends SQLiteOpenHelper {
         onCreate(database);
     }
 
+    private void copyDatabase() {
+
+    }
 
 }
