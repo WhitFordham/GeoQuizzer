@@ -2,11 +2,15 @@ package edu.uga.cs.geoquizzer;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,8 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class SplashScreenFragment extends Fragment {
+    static CountriesData countriesData = null;
+    static List<Country> countryList;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -60,5 +66,34 @@ public class SplashScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_splash_screen, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        DatabaseHelper helper = DatabaseHelper.getInstance(getActivity());
+
+        helper.createDatabase();
+
+        countryList = new ArrayList<>();
+        countriesData = new CountriesData(getActivity());
+
+        countriesData.open();
+        new DatabaseReader().execute();
+    }
+
+    private class DatabaseReader extends AsyncTask<Void, List<Country>> {
+        @Override
+        protected List<Country> doInBackground(Void... params) {
+            List<Country> countries = countriesData.retrieveCountries();
+            return countries;
+        }
+
+        @Override
+        protected void onPostExecute(List<Country> countries) {
+            countryList.addAll(countries);
+            countriesData.close();
+        }
     }
 }

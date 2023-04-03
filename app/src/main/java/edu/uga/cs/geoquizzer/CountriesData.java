@@ -1,5 +1,6 @@
 package edu.uga.cs.geoquizzer;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -17,6 +18,12 @@ public class CountriesData {
             "id",
             "name",
             "continent"
+    };
+
+    private static final String[] quizColumns = {
+            "id",
+            "date",
+            "score"
     };
 
     public CountriesData(Context context) {
@@ -48,9 +55,7 @@ public class CountriesData {
             cursor = database.query("countries", countryColumns, null,
                     null, null, null, null);
 
-            Log.d("Truth", "Cursor: " + cursor);
             if (cursor != null && cursor.getCount() > 0) {
-                Log.d("THIE IS A WARNING", "Sheemalolo");
                 while (cursor.moveToNext()) {
                     if (cursor.getColumnCount() >= 3) {
                         columnIndex = cursor.getColumnIndex("name");
@@ -68,7 +73,7 @@ public class CountriesData {
                 } // while
             } // if
         } catch (Exception error) {
-            Log.d("Wow", error.getMessage());
+            Log.d("Error", error.getMessage());
             error.printStackTrace();
         } finally {
             if (cursor != null) {
@@ -76,5 +81,53 @@ public class CountriesData {
             }
         }
         return countries;
+    }
+
+    public List<Quiz> retrieveQuizzes() {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        Cursor cursor = null;
+        int columnIndex;
+
+        try {
+            cursor = database.query("results", quizColumns, null,
+                    null, null, null, null);
+
+            if (cursor != null && cursor.getCount() > 0) {
+                while (cursor.moveToNext()) {
+                    if (cursor.getColumnCount() >= 3) {
+                        columnIndex = cursor.getColumnIndex("date");
+                        String date = cursor.getString(columnIndex);
+                        columnIndex = cursor.getColumnIndex("score");
+                        String score = cursor.getString(columnIndex);
+                        columnIndex = cursor.getColumnIndex("id");
+                        long id = cursor.getLong(columnIndex);
+
+                        Quiz quiz = new Quiz(date, score);
+                        quiz.setID(id);
+
+                        quizzes.add(quiz);
+                    } // if
+                } // while
+            } // if
+        } catch (Exception error) {
+            Log.d("Error", error.getMessage());
+            error.printStackTrace();
+        } finally {
+            if (cursor != null) {
+                cursor.close();
+            }
+        }
+        return quizzes;
+    }
+
+    public Quiz storeQuiz(Quiz quiz) {
+        ContentValues values = new ContentValues();
+        values.put("date", quiz.getDate());
+        values.put("score", quiz.getScore());
+
+        long id = database.insert("results", null, values);
+        quiz.setID(id);
+
+        return quiz;
     }
 }
