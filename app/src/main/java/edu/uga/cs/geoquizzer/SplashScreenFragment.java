@@ -104,19 +104,35 @@ public class SplashScreenFragment extends Fragment {
             public void onClick(View v) {
 
                 Quiz newQuiz = new Quiz(strDate, "0");
+                int randomNum = (int) (Math.random() * (countryList.size() - 6)) + 0;
+                System.out.println(countryList.size());
 
-                Question[] questions = new Question[]{
-                        new Question(),
-                        new Question(),
-                        new Question(),
-                        new Question(),
-                        new Question(),
-                        new Question()
-                };
 
-                //(String countryName, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2)
+                if (countryList.size() < 7) {
+                    Question[] questions = new Question[]{
+                            new Question(),
+                            new Question(),
+                            new Question(),
+                            new Question(),
+                            new Question(),
+                            new Question()
+                    };
+                    newQuiz.setQuestions(questions);
 
-                newQuiz.setQuestions(questions);
+                } else {
+
+                    Question[] questions = new Question[]{
+                            new Question(countryList.get(randomNum).getCountryName(), countryList.get(randomNum).getCountryContinent(), "wrong answer", "wrong answer"),
+                            new Question(countryList.get(randomNum + 1).getCountryName(), countryList.get(randomNum + 1).getCountryContinent(), "wrong answer", "wrong answer"),
+                            new Question(countryList.get(randomNum + 2).getCountryName(), countryList.get(randomNum + 2).getCountryContinent(), "wrong answer", "wrong answer"),
+                            new Question(countryList.get(randomNum + 3).getCountryName(), countryList.get(randomNum + 3).getCountryContinent(), "wrong answer", "wrong answer"),
+                            new Question(countryList.get(randomNum + 4).getCountryName(), countryList.get(randomNum + 4).getCountryContinent(), "wrong answer", "wrong answer"),
+                            new Question(countryList.get(randomNum + 5).getCountryName(), countryList.get(randomNum + 5).getCountryContinent(), "wrong answer", "wrong answer")
+                    };
+                    newQuiz.setQuestions(questions);
+                }
+
+                System.out.println(newQuiz.getQuestions()[1].getCorrectAnswer());
 
             }
         });

@@ -2,17 +2,11 @@ package edu.uga.cs.geoquizzer;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -67,44 +61,4 @@ public class QuestionFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_question, container, false);
     }
-
-    @Override
-    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-    }
-
-    /*
-    Used in different fragments
-    private class DatabaseReader extends AsyncTask<Void, List<Quiz>> {
-        List<Quiz> quizResults = new ArrayList<>();
-
-        @Override
-        protected List<Quiz> doInBackground(Void... params) {
-            List<Quiz> quizzes = SplashScreenFragment.countriesData.retrieveQuizzes();
-            return quizzes;
-        }
-
-        @Override
-        protected void onPostExecute(List<Quiz> quizList) {
-            quizResults.addAll(quizList);
-            SplashScreenFragment.countriesData.close();
-        }
-    }
-
-    private class DatabaseWriter extends AsyncTask<Quiz, Quiz> {
-        @Override
-        protected Quiz doInBackground(Quiz... quizzes) {
-            SplashScreenFragment.countriesData.storeQuiz(quizzes[0]);
-            return quizzes[0];
-        }
-
-        @Override
-        protected void onPostExecute(Quiz quiz) {
-            // Show a quick confirmation message
-            Toast.makeText(getActivity(), "Job lead created for " + quiz.getDate(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-     */
 }
