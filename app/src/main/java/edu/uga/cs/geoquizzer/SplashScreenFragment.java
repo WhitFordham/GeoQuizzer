@@ -78,6 +78,28 @@ public class SplashScreenFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_splash_screen, container, false);
     }
 
+
+
+    //method to get a random continent as the an answer option
+    public String getRandomAnswer(String correctAnswer) {
+        String[] continentsList = new String[]{
+                "Europe",
+                "Asia",
+                "Australia",
+                "North America",
+                "South America",
+                "Africa",
+                "Antarctica"
+        };
+
+        int randomNum = (int) (Math.random() * 7);
+        if (continentsList[randomNum].equals(correctAnswer)) {
+            return getRandomAnswer(correctAnswer);
+        } else {
+            return continentsList[randomNum];
+        }
+    }
+
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -98,6 +120,8 @@ public class SplashScreenFragment extends Fragment {
 
         Button newQuizButton = view.findViewById( R.id.button );
         Button prevResultsButton = view.findViewById( R.id.button2 );
+
+
 
         newQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,20 +146,34 @@ public class SplashScreenFragment extends Fragment {
                 } else {
 
                     Question[] questions = new Question[]{
-                            new Question(countryList.get(randomNum).getCountryName(), countryList.get(randomNum).getCountryContinent(), "wrong answer", "wrong answer"),
-                            new Question(countryList.get(randomNum + 1).getCountryName(), countryList.get(randomNum + 1).getCountryContinent(), "wrong answer", "wrong answer"),
-                            new Question(countryList.get(randomNum + 2).getCountryName(), countryList.get(randomNum + 2).getCountryContinent(), "wrong answer", "wrong answer"),
-                            new Question(countryList.get(randomNum + 3).getCountryName(), countryList.get(randomNum + 3).getCountryContinent(), "wrong answer", "wrong answer"),
-                            new Question(countryList.get(randomNum + 4).getCountryName(), countryList.get(randomNum + 4).getCountryContinent(), "wrong answer", "wrong answer"),
-                            new Question(countryList.get(randomNum + 5).getCountryName(), countryList.get(randomNum + 5).getCountryContinent(), "wrong answer", "wrong answer")
+                            new Question(countryList.get(randomNum).getCountryName(), countryList.get(randomNum).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum).getCountryContinent())),
+                            new Question(countryList.get(randomNum + 1).getCountryName(), countryList.get(randomNum + 1).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum + 1).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum + 1).getCountryContinent())),
+                            new Question(countryList.get(randomNum + 2).getCountryName(), countryList.get(randomNum + 2).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum + 2).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum + 2).getCountryContinent())),
+                            new Question(countryList.get(randomNum + 3).getCountryName(), countryList.get(randomNum + 3).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum + 3).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum + 3).getCountryContinent())),
+                            new Question(countryList.get(randomNum + 4).getCountryName(), countryList.get(randomNum + 4).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum + 4).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum + 4).getCountryContinent())),
+                            new Question(countryList.get(randomNum + 5).getCountryName(), countryList.get(randomNum + 5).getCountryContinent(),
+                                    getRandomAnswer(countryList.get(randomNum + 5).getCountryContinent()),
+                                    getRandomAnswer(countryList.get(randomNum + 5).getCountryContinent()))
                     };
                     newQuiz.setQuestions(questions);
                 }
 
                 System.out.println(newQuiz.getQuestions()[1].getCorrectAnswer());
 
+
             }
         });
+
 
     }
 
