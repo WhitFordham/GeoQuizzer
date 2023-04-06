@@ -1,5 +1,6 @@
 package edu.uga.cs.geoquizzer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -8,8 +9,14 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -59,6 +66,9 @@ public class SplashScreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
+
+
     }
 
     @Override
@@ -81,6 +91,36 @@ public class SplashScreenFragment extends Fragment {
 
         countriesData.open();
         new DatabaseReader().execute();
+
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+
+        Button newQuizButton = view.findViewById( R.id.button );
+        Button prevResultsButton = view.findViewById( R.id.button2 );
+
+        newQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Quiz newQuiz = new Quiz(strDate, "0");
+
+                Question[] questions = new Question[]{
+                        new Question(),
+                        new Question(),
+                        new Question(),
+                        new Question(),
+                        new Question(),
+                        new Question()
+                };
+
+                //(String countryName, String correctAnswer, String incorrectAnswer1, String incorrectAnswer2)
+
+                newQuiz.setQuestions(questions);
+
+            }
+        });
+
     }
 
     private class DatabaseReader extends AsyncTask<Void, List<Country>> {
