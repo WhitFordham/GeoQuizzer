@@ -13,7 +13,9 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        return QuestionFragment.newInstance(position);
+        if (position == 6) {
+            return ResultFragment.newInstance();
+        } else return QuestionFragment.newInstance(position);
     }
 
     @Override

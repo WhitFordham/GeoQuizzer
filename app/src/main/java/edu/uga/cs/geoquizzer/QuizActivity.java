@@ -34,17 +34,23 @@ public class QuizActivity extends AppCompatActivity {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate = dateFormat.format(date);
 
-        newQuiz = new Quiz(strDate, "0");
+        newQuiz = new Quiz(strDate, 0);
 
-        int randomNum = (int) (Math.random() * (MainActivity.countryList.size() - 6)) + 0;
+        Random random = new Random();
 
         for (int i = 0; i < 6; i++) {
-            Question question = new Question(MainActivity.countryList.get(randomNum).getCountryName(),
-                    MainActivity.countryList.get(randomNum).getCountryContinent(),
-                    getRandomAnswer(MainActivity.countryList.get(randomNum).getCountryContinent()),
-                    getRandomAnswer(MainActivity.countryList.get(randomNum).getCountryContinent()));
+            int index = random.nextInt(MainActivity.countryList.size());
+            String correctAnswer = MainActivity.countryList.get(index).getCountryContinent();
+            String incorrectAnswer1 = getRandomAnswer(correctAnswer);
+            String incorrectAnswer2 = getRandomAnswer(correctAnswer);
+
+            while (incorrectAnswer2.equals(incorrectAnswer1)) incorrectAnswer2 = getRandomAnswer(incorrectAnswer1);
+
+            Question question = new Question(MainActivity.countryList.get(index).getCountryName(),
+                    correctAnswer, incorrectAnswer1, incorrectAnswer2);
 
             newQuiz.getQuestions().add(question);
+            MainActivity.countryList.remove(index);
         }
     }
 

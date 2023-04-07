@@ -5,19 +5,19 @@ import java.util.ArrayList;
 public class Quiz {
     private long id;
     private String date;
-    private String currentScore;
+    private int currentScore;
     private int numOfAnsweredQuestions;
     private ArrayList<Question> questions;
 
     public Quiz() {
         this.id = -1;
         this.date = null;
-        this.currentScore = null;
+        this.currentScore = 0;
         this.questions = null;
         this.numOfAnsweredQuestions = 0;
     }
 
-    public Quiz(String date, String currentScore) {
+    public Quiz(String date, int currentScore) {
         this.id = -1;
         this.date = date;
         this.currentScore = currentScore;
@@ -41,12 +41,12 @@ public class Quiz {
         this.date = date;
     }
 
-    public String getCurrentScore() {
+    public int getCurrentScore() {
         return this.currentScore;
     }
 
-    public void setCurrentScore(String score) {
-        this.currentScore = currentScore;
+    public void setCurrentScore(int score) {
+        this.currentScore += score;
     }
 
     public ArrayList<Question> getQuestions() {

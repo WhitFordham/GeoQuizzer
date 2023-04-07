@@ -9,22 +9,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link SplashScreenFragment#newInstance} factory method to
+ * Use the {@link ResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class SplashScreenFragment extends Fragment {
-    static CountriesData countriesData = null;
-    static List<Country> countryList;
+public class ResultFragment extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,7 +33,7 @@ public class SplashScreenFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public SplashScreenFragment() {
+    public ResultFragment() {
         // Required empty public constructor
     }
 
@@ -45,15 +43,11 @@ public class SplashScreenFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment SplacshScreenFragment.
+     * @return A new instance of fragment ResultFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static SplashScreenFragment newInstance(String param1, String param2) {
-        SplashScreenFragment fragment = new SplashScreenFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
+    public static ResultFragment newInstance() {
+        ResultFragment fragment = new ResultFragment();
         return fragment;
     }
 
@@ -64,41 +58,35 @@ public class SplashScreenFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_splash_screen, container, false);
+        return inflater.inflate(R.layout.fragment_result, container, false);
     }
 
-
-    //method to get a random continent as the an answer option
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
+        TextView score = view.findViewById(R.id.textView2);
+        score.setText("Your Score: " + QuizActivity.newQuiz.getCurrentScore() + "/6");
+    }
 
-        Button newQuizButton = view.findViewById(R.id.button);
-        Button prevResultsButton = view.findViewById(R.id.button2);
+    private class DatabaseWriter extends AsyncTask<Quiz, Quiz> {
+        @Override
+        protected Quiz doInBackground(Quiz... quizzes) {
+            SplashScreenFragment.countriesData.storeQuiz(quizzes[0]);
+            return quizzes[0];
+        }
 
-
-        newQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Quiz newQuiz = new Quiz(strDate, 0);
-                int randomNum = (int) (Math.random() * (countryList.size() - 6)) + 0;
-                System.out.println(countryList.size());
-
-            }
-        });
-
+        @Override
+        protected void onPostExecute(Quiz quiz) {
+            // Show a quick confirmation message
+            Toast.makeText(getActivity(), "Quiz created for " + quiz.getDate(),
+                    Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -102,7 +102,7 @@ public class CountriesData {
                         columnIndex = cursor.getColumnIndex("id");
                         long id = cursor.getLong(columnIndex);
 
-                        Quiz quiz = new Quiz(date, score);
+                        Quiz quiz = new Quiz(date, Integer.parseInt(score));
                         quiz.setID(id);
 
                         quizzes.add(quiz);
@@ -123,7 +123,7 @@ public class CountriesData {
     public Quiz storeQuiz(Quiz quiz) {
         ContentValues values = new ContentValues();
         values.put("date", quiz.getDate());
-        values.put("score", quiz.getCurrentScore());
+        values.put("score", Integer.toString(quiz.getCurrentScore()));
 
         long id = database.insert("results", null, values);
         quiz.setID(id);
