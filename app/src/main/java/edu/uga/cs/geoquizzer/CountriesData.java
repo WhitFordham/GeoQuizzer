@@ -123,7 +123,7 @@ public class CountriesData {
     public Quiz storeQuiz(Quiz quiz) {
         ContentValues values = new ContentValues();
         values.put("date", quiz.getDate());
-        values.put("score", quiz.getScore());
+        values.put("score", quiz.getCurrentScore());
 
         long id = database.insert("results", null, values);
         quiz.setID(id);

@@ -1,8 +1,6 @@
 package edu.uga.cs.geoquizzer;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentManager;
-import androidx.viewpager2.widget.ViewPager2;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,22 +16,46 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Calendar;
 
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
-
 public class MainActivity extends AppCompatActivity {
 
+    static ArrayList<Country> countryList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_splash_screen);
 
-        Fragment fragment = new SplashScreenFragment();
+        Button newQuizButton = findViewById(R.id.button);
 
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace( R.id.fragmentContainerView, fragment).addToBackStack("main screen" ).commit();
+        DatabaseHelper helper = DatabaseHelper.getInstance(getApplicationContext());
 
+        helper.createDatabase();
 
+        new DatabaseReader().execute();
+        newQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("Number of Countries", "Size: " + countryList.size());
+                Intent intent = new Intent();
+                intent.setClass(v.getContext(), QuizActivity.class);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private class DatabaseReader extends AsyncTask<Void, List<Country>> {
+        private CountriesData countriesData = new CountriesData(getApplicationContext());
+        @Override
+        protected List<Country> doInBackground(Void... params) {
+            countriesData.open();
+            List<Country> countries = countriesData.retrieveCountries();
+            return countries;
+        }
+
+        @Override
+        protected void onPostExecute(List<Country> countries) {
+            countryList.addAll(countries);
+            countriesData.close();
+        }
     }
 }

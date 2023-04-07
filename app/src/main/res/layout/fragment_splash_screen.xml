@@ -5,6 +5,8 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreenFragment">
 
+    <!-- TODO: Update blank fragment layout -->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,4 +47,5 @@
             android:layout_height="wrap_content"
             android:text="View Previous results" />
     </LinearLayout>
+
 </FrameLayout>

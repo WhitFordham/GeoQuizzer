@@ -1,26 +1,28 @@
 package edu.uga.cs.geoquizzer;
 
-import androidx.annotation.NonNull;
+import java.util.ArrayList;
 
 public class Quiz {
     private long id;
     private String date;
-    private String score;
-
-    private Question[] questions;
+    private String currentScore;
+    private int numOfAnsweredQuestions;
+    private ArrayList<Question> questions;
 
     public Quiz() {
         this.id = -1;
         this.date = null;
-        this.score = null;
+        this.currentScore = null;
         this.questions = null;
+        this.numOfAnsweredQuestions = 0;
     }
 
-    public Quiz(String date, String result) {
+    public Quiz(String date, String currentScore) {
         this.id = -1;
         this.date = date;
-        this.score = result;
-        this.questions = new Question[6];
+        this.currentScore = currentScore;
+        this.numOfAnsweredQuestions = 0;
+        this.questions = new ArrayList<>();
     }
 
     public long getId() {
@@ -39,23 +41,23 @@ public class Quiz {
         this.date = date;
     }
 
-    public String getScore() {
-        return score;
+    public String getCurrentScore() {
+        return this.currentScore;
     }
 
-    public void setScore(String result) {
-        this.score = result;
+    public void setCurrentScore(String score) {
+        this.currentScore = currentScore;
     }
 
-    public Question[] getQuestions() {
+    public ArrayList<Question> getQuestions() {
         return this.questions;
     }
 
-    public void setQuestions(Question[] questions) {
+    public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
     }
 
     public String toString() {
-        return id + ": " + date + " " + score;
+        return id + ": " + date + " " + currentScore;
     }
 }

@@ -1,6 +1,5 @@
 package edu.uga.cs.geoquizzer;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -68,7 +66,6 @@ public class SplashScreenFragment extends Fragment {
         }
 
 
-
     }
 
     @Override
@@ -79,48 +76,17 @@ public class SplashScreenFragment extends Fragment {
     }
 
 
-
     //method to get a random continent as the an answer option
-    public String getRandomAnswer(String correctAnswer) {
-        String[] continentsList = new String[]{
-                "Europe",
-                "Asia",
-                "Australia",
-                "North America",
-                "South America",
-                "Africa",
-                "Antarctica"
-        };
-
-        int randomNum = (int) (Math.random() * 7);
-        if (continentsList[randomNum].equals(correctAnswer)) {
-            return getRandomAnswer(correctAnswer);
-        } else {
-            return continentsList[randomNum];
-        }
-    }
-
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        DatabaseHelper helper = DatabaseHelper.getInstance(getActivity());
-
-        helper.createDatabase();
-
-        countryList = new ArrayList<>();
-        countriesData = new CountriesData(getActivity());
-
-        countriesData.open();
-        new DatabaseReader().execute();
 
         Date date = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
         String strDate = dateFormat.format(date);
 
-        Button newQuizButton = view.findViewById( R.id.button );
-        Button prevResultsButton = view.findViewById( R.id.button2 );
-
+        Button newQuizButton = view.findViewById(R.id.button);
+        Button prevResultsButton = view.findViewById(R.id.button2);
 
 
         newQuizButton.setOnClickListener(new View.OnClickListener() {
@@ -131,63 +97,8 @@ public class SplashScreenFragment extends Fragment {
                 int randomNum = (int) (Math.random() * (countryList.size() - 6)) + 0;
                 System.out.println(countryList.size());
 
-
-                if (countryList.size() < 7) {
-                    Question[] questions = new Question[]{
-                            new Question(),
-                            new Question(),
-                            new Question(),
-                            new Question(),
-                            new Question(),
-                            new Question()
-                    };
-                    newQuiz.setQuestions(questions);
-
-                } else {
-
-                    Question[] questions = new Question[]{
-                            new Question(countryList.get(randomNum).getCountryName(), countryList.get(randomNum).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum).getCountryContinent())),
-                            new Question(countryList.get(randomNum + 1).getCountryName(), countryList.get(randomNum + 1).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum + 1).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum + 1).getCountryContinent())),
-                            new Question(countryList.get(randomNum + 2).getCountryName(), countryList.get(randomNum + 2).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum + 2).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum + 2).getCountryContinent())),
-                            new Question(countryList.get(randomNum + 3).getCountryName(), countryList.get(randomNum + 3).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum + 3).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum + 3).getCountryContinent())),
-                            new Question(countryList.get(randomNum + 4).getCountryName(), countryList.get(randomNum + 4).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum + 4).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum + 4).getCountryContinent())),
-                            new Question(countryList.get(randomNum + 5).getCountryName(), countryList.get(randomNum + 5).getCountryContinent(),
-                                    getRandomAnswer(countryList.get(randomNum + 5).getCountryContinent()),
-                                    getRandomAnswer(countryList.get(randomNum + 5).getCountryContinent()))
-                    };
-                    newQuiz.setQuestions(questions);
-                }
-
-                System.out.println(newQuiz.getQuestions()[1].getCorrectAnswer());
-
-
             }
         });
 
-
-    }
-
-    private class DatabaseReader extends AsyncTask<Void, List<Country>> {
-        @Override
-        protected List<Country> doInBackground(Void... params) {
-            List<Country> countries = countriesData.retrieveCountries();
-            return countries;
-        }
-
-        @Override
-        protected void onPostExecute(List<Country> countries) {
-            countryList.addAll(countries);
-            countriesData.close();
-        }
     }
 }
