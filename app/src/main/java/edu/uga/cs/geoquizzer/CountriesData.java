@@ -10,6 +10,10 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ *  Provides a convenient way to open and close the database, and to read countries/neighbors and store quizzes, and their partial progress.
+ */
 public class CountriesData {
     private SQLiteDatabase database;
     private SQLiteOpenHelper databaseHelper;

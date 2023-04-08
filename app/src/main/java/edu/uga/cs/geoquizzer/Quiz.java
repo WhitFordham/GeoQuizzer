@@ -2,6 +2,10 @@ package edu.uga.cs.geoquizzer;
 
 import java.util.ArrayList;
 
+
+/**
+ * Class for creating a quiz object.
+ */
 public class Quiz {
     private long id;
     private String date;
@@ -9,6 +13,9 @@ public class Quiz {
     private int numOfAnsweredQuestions;
     private ArrayList<Question> questions;
 
+    /**
+     * Initializes a quiz with no parameters.
+     */
     public Quiz() {
         this.id = -1;
         this.date = null;
@@ -17,6 +24,11 @@ public class Quiz {
         this.numOfAnsweredQuestions = 0;
     }
 
+    /**
+     * Initializes a quiz.
+     * @param date date for new quiz object.
+     * @param currentScore score for new quiz object.
+     */
     public Quiz(String date, int currentScore) {
         this.id = -1;
         this.date = date;

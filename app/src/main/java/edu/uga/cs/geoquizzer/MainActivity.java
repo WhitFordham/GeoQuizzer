@@ -19,6 +19,10 @@ import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
+    /**
+     * Main activity class.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

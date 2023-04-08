@@ -5,6 +5,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Lifecycle;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+/**
+ * This is an adapter class for the PagerView to show all quiz questions.
+ */
 public class QuizPagerAdapter extends FragmentStateAdapter {
     public QuizPagerAdapter(FragmentManager fragmentManager,
                             Lifecycle lifecycle) {

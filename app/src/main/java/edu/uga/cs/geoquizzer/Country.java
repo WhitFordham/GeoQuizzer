@@ -1,5 +1,9 @@
 package edu.uga.cs.geoquizzer;
 
+
+/**
+ * Class to create a country object.
+ */
 public class Country {
     private long id;
     private String countryName;

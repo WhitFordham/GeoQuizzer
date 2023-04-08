@@ -18,6 +18,10 @@ import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * This is an adapter class for the RecyclerView to show all quizzes.
+ */
 public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecyclerAdapter.QuizHolder> {
 
     private final Context context;

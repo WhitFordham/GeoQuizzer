@@ -2,6 +2,10 @@ package edu.uga.cs.geoquizzer;
 
 import android.media.MediaCodec;
 
+
+/**
+ * Question class that defines a question object.
+ */
 public class Question {
     private String countryName;
     private String correctAnswer;

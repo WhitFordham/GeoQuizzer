@@ -14,6 +14,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * Class used when starting a new quiz.
+ */
 public class QuizActivity extends AppCompatActivity {
     static Quiz newQuiz;
     static ViewPager2 pager;

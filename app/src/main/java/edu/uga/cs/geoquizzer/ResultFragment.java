@@ -20,6 +20,8 @@ import java.util.Calendar;
 import java.util.Date;
 
 /**
+ * Class to show the results at the end of a quiz.
+ *
  * A simple {@link Fragment} subclass.
  * Use the {@link ResultFragment#newInstance} factory method to
  * create an instance of this fragment.
