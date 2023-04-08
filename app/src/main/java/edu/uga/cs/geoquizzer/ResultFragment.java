@@ -55,6 +55,11 @@ public class ResultFragment extends Fragment {
         return fragment;
     }
 
+    /**
+     * Called when class is created.
+     * @param savedInstanceState If the fragment is being re-created from
+     * a previous saved state, this is the state.
+     */
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,6 +120,9 @@ public class ResultFragment extends Fragment {
 
     }
 
+    /**
+     * Writes quiz info to the database.
+     */
     private class DatabaseWriter extends AsyncTask<Quiz, Quiz> {
         @Override
         protected Quiz doInBackground(Quiz... quizzes) {

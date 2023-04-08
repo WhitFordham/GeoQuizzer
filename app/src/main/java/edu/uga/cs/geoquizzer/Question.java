@@ -12,6 +12,9 @@ public class Question {
     private String incorrectAnswer1;
     private String incorrectAnswer2;
 
+    /**
+     * Default constructor for a question object.
+     */
     public Question() {
         countryName = null;
         correctAnswer = null;
@@ -19,6 +22,13 @@ public class Question {
         incorrectAnswer2 = null;
     }
 
+    /**
+     * Constructor for the question object
+     * @param countryName name of the country
+     * @param correctAnswer correct continent for the country
+     * @param incorrectAnswer1 first incorrect answer
+     * @param incorrectAnswer2 second incorrect answer
+     */
     public Question(String countryName, String correctAnswer,
                     String incorrectAnswer1, String incorrectAnswer2) {
         this.countryName = countryName;

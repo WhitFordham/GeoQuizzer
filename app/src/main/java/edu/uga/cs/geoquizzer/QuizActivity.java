@@ -21,6 +21,10 @@ public class QuizActivity extends AppCompatActivity {
     static Quiz newQuiz;
     static ViewPager2 pager;
 
+    /**
+     * Called when the Quiz Activity is created.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,6 +46,12 @@ public class QuizActivity extends AppCompatActivity {
         startNewQuiz();
     }
 
+    /**
+     * Returns a random answer that is not the same as the correct answer
+     * @param correctAnswer correct answer for the question.
+     * @return an incorrect answer option.
+     */
+
     public String getRandomAnswer(String correctAnswer) {
         String[] continentsList = new String[]{
                 "Europe",
@@ -61,6 +71,9 @@ public class QuizActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Starts a new quiz.
+     */
     public void startNewQuiz() {
         Random random = new Random();
 

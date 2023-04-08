@@ -9,18 +9,30 @@ public class Country {
     private String countryName;
     private String countryContinent;
 
+    /**
+     * Default country constructor.
+     */
     public Country() {
         this.id = -1;
         this.countryName = null;
         this.countryContinent = null;
     }
 
+    /**
+     * Country constructor
+     * @param name name of the country
+     * @param continent continent of the country
+     */
     public Country(String name, String continent) {
         this.id = -1;
         this.countryName = name;
         this.countryContinent = continent;
     }
 
+    /**
+     * Returns the ID of the country.
+     * @return
+     */
     public long getID() {
         return this.id;
     }

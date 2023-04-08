@@ -20,6 +20,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper databaseInstance;
     private final Context context;
 
+    /**
+     * Constructor for the class.
+     * @param context
+     */
     private DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -33,6 +37,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return databaseInstance;
     }
 
+    /**
+     * Used to create a new database.
+     */
     public void createDatabase() {
        File databaseFile = context.getDatabasePath(DATABASE_NAME);
 
@@ -42,6 +49,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
            copyDatabase();
        }
     }
+
+    /**
+     * Used to copy the database.
+     */
     private void copyDatabase() {
         try {
             InputStream inputStream = context.getAssets().open(DATABASE_NAME);

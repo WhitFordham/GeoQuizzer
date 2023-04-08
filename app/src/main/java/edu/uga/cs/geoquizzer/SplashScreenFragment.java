@@ -94,6 +94,9 @@ public class SplashScreenFragment extends Fragment {
         new DatabaseReader().execute();
     }
 
+    /**
+     * Reads info from the database.
+     */
     private class DatabaseReader extends AsyncTask<Void, List<Country>> {
         private CountriesData countriesData = new CountriesData(getActivity());
 

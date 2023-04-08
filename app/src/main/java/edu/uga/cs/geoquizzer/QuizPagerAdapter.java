@@ -9,11 +9,21 @@ import androidx.viewpager2.adapter.FragmentStateAdapter;
  * This is an adapter class for the PagerView to show all quiz questions.
  */
 public class QuizPagerAdapter extends FragmentStateAdapter {
+    /**
+     * Constructor.
+     * @param fragmentManager
+     * @param lifecycle
+     */
     public QuizPagerAdapter(FragmentManager fragmentManager,
                             Lifecycle lifecycle) {
         super(fragmentManager, lifecycle);
     }
 
+    /**
+     * Creates the fragment for the pager
+     * @param position in fragment list
+     * @return
+     */
     @Override
     public Fragment createFragment(int position) {
         if (position == 6) {
@@ -21,6 +31,10 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
         } else return QuestionFragment.newInstance(position);
     }
 
+    /**
+     * Returns number of quizzes.
+     * @return
+     */
     @Override
     public int getItemCount() {
         return 7;

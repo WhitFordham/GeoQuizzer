@@ -29,6 +29,11 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
     private List<Quiz> values;
     private List<Quiz> originalValues;
 
+    /**
+     * Constructor object
+     * @param context
+     * @param quizList
+     */
     public QuizListRecyclerAdapter( Context context, List<Quiz> quizList ) {
         this.context = context;
         this.values = quizList;
