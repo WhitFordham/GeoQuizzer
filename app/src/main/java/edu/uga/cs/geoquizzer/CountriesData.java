@@ -30,22 +30,36 @@ public class CountriesData {
             "score"
     };
 
+    /**
+     * Constructor method.
+     * @param context
+     */
+
     public CountriesData(Context context) {
         this.databaseHelper = DatabaseHelper.getInstance(context);
     }
 
+    /**
+     * opens database helper
+     */
     public void open() {
 
         database = databaseHelper.getWritableDatabase();
         Log.d("asedrfetg", database.getPath());
     }
 
+    /**
+     * closes the database helper
+     */
     public void close() {
         if (databaseHelper != null) {
             databaseHelper.close();
         }
     }
 
+    /**
+     * @return true if the database helper is open and false otherwise.
+     */
     public boolean isOpen() {
         return database.isOpen();
     }
@@ -87,6 +101,9 @@ public class CountriesData {
         return countries;
     }
 
+    /**
+     * @return quizzes from the database in the form of a list.
+     */
     public List<Quiz> retrieveQuizzes() {
         ArrayList<Quiz> quizzes = new ArrayList<>();
         Cursor cursor = null;
@@ -123,6 +140,12 @@ public class CountriesData {
         }
         return quizzes;
     }
+
+    /**
+     * Stores quiz in the data base.
+     * @param quiz quiz to be stored.
+     * @return
+     */
 
     public Quiz storeQuiz(Quiz quiz) {
         ContentValues values = new ContentValues();
