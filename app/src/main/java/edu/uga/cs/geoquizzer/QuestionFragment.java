@@ -31,6 +31,13 @@ public class QuestionFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private int questionNumber;
 
+    private TextView country;
+    private RadioButton choice1;
+    private RadioButton choice2;
+    private RadioButton choice3;
+    private boolean isIncremented;
+    private int correctChoice;
+
     public QuestionFragment() {
         // Required empty public constructor
     }
@@ -44,6 +51,7 @@ public class QuestionFragment extends Fragment {
      */
     // TODO: Rename and change types and number of parameters
     public static QuestionFragment newInstance(int questionNumber) {
+        QuizActivity.newQuiz.setNumOfAnsweredQuestions(questionNumber);
         Log.d("Number", "Question " + questionNumber);
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
@@ -74,33 +82,51 @@ public class QuestionFragment extends Fragment {
         Question question = QuizActivity.newQuiz.getQuestions().get(questionNumber);
         int score = QuizActivity.newQuiz.getCurrentScore();
 
-        TextView country = view.findViewById(R.id.textView5);
+        country = view.findViewById(R.id.textView5);
         country.setText(question.getCountryName());
 
-        RadioButton choice1 = view.findViewById(R.id.radioButton);
-        RadioButton choice2 = view.findViewById(R.id.radioButton2);
-        RadioButton choice3 = view.findViewById(R.id.radioButton3);
-
+        choice1 = view.findViewById(R.id.radioButton);
+        choice2 = view.findViewById(R.id.radioButton2);
+        choice3 = view.findViewById(R.id.radioButton3);
 
         Random random = new Random();
-        int correctChoice = random.nextInt(3) + 1;
+        correctChoice = random.nextInt(3) + 1;
         RadioButton correctButton = choice1;
 
-        if (correctChoice == 1) {
-            correctButton = choice1;
-            choice1.setText(question.getCorrectAnswer());
-            choice2.setText(question.getIncorrectAnswer1());
-            choice3.setText(question.getIncorrectAnswer2());
-        } else if (correctChoice == 2) {
-            correctButton = choice2;
-            choice2.setText(question.getCorrectAnswer());
-            choice1.setText(question.getIncorrectAnswer1());
-            choice3.setText(question.getIncorrectAnswer2());
-        } else if (correctChoice == 3) {
-            correctButton = choice3;
-            choice3.setText(question.getCorrectAnswer());
-            choice2.setText(question.getIncorrectAnswer1());
-            choice1.setText(question.getIncorrectAnswer2());
+        if (savedInstanceState != null) {
+            QuizActivity.newQuiz.setCurrentScore(savedInstanceState.getInt("score"));
+            country.setText(savedInstanceState.getString("country"));
+            choice1.setText(savedInstanceState.getString("choice1"));
+            choice2.setText(savedInstanceState.getString("choice2"));
+            choice3.setText(savedInstanceState.getString("choice3"));
+            correctChoice = savedInstanceState.getInt("correctChoice");
+            isIncremented = savedInstanceState.getBoolean("isCorrect");
+            Log.d("Message", "Right: " + isIncremented);
+
+            if (isIncremented) {
+                QuizActivity.newQuiz.decrementScore();
+            }
+
+            if (correctChoice == 1) correctButton = choice1;
+            if (correctChoice == 2) correctButton = choice2;
+            if (correctChoice == 3) correctButton = choice3;
+        } else {
+            if (correctChoice == 1) {
+                correctButton = choice1;
+                choice1.setText(question.getCorrectAnswer());
+                choice2.setText(question.getIncorrectAnswer1());
+                choice3.setText(question.getIncorrectAnswer2());
+            } else if (correctChoice == 2) {
+                correctButton = choice2;
+                choice2.setText(question.getCorrectAnswer());
+                choice1.setText(question.getIncorrectAnswer1());
+                choice3.setText(question.getIncorrectAnswer2());
+            } else if (correctChoice == 3) {
+                correctButton = choice3;
+                choice3.setText(question.getCorrectAnswer());
+                choice2.setText(question.getIncorrectAnswer1());
+                choice1.setText(question.getIncorrectAnswer2());
+            }
         }
 
         final RadioButton userChoice = correctButton;
@@ -110,18 +136,29 @@ public class QuestionFragment extends Fragment {
             RadioButton selectedButton = view.findViewById(button);
 
             if (selectedButton == userChoice) {
-                QuizActivity.newQuiz.setCurrentScore(1);
+                isIncremented = true;
+                QuizActivity.newQuiz.incrementScore();
                 Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
             } else {
                 if (QuizActivity.newQuiz.getCurrentScore() > score) {
-                    QuizActivity.newQuiz.setCurrentScore(-1);
+                    QuizActivity.newQuiz.decrementScore();
+                    isIncremented = false;
                 }
                 Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
             }
         });
-        if (correctButton.isChecked()) {
-            QuizActivity.newQuiz.setCurrentScore(1);
-            Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
-        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("score", QuizActivity.newQuiz.getCurrentScore());
+        outState.putString("country", country.getText().toString());
+        outState.putString("choice1", choice1.getText().toString());
+        outState.putString("choice2", choice2.getText().toString());
+        outState.putString("choice3", choice3.getText().toString());
+        outState.putInt("correctChoice", correctChoice);
+        outState.putBoolean("isCorrect", isIncremented);
     }
 }

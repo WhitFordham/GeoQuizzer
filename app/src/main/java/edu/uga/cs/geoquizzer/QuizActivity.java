@@ -22,6 +22,11 @@ public class QuizActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
+        Date date = Calendar.getInstance().getTime();
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        String strDate = dateFormat.format(date);
+
+        newQuiz = new Quiz(strDate, 0);
 
         pager = findViewById(R.id.viewPager);
 
@@ -54,12 +59,6 @@ public class QuizActivity extends AppCompatActivity {
     }
 
     public void startNewQuiz() {
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
-
-        newQuiz = new Quiz(strDate, 0);
-
         Random random = new Random();
 
         for (int i = 0; i < 6; i++) {
@@ -68,7 +67,8 @@ public class QuizActivity extends AppCompatActivity {
             String incorrectAnswer1 = getRandomAnswer(correctAnswer);
             String incorrectAnswer2 = getRandomAnswer(correctAnswer);
 
-            while (incorrectAnswer2.equals(incorrectAnswer1)) incorrectAnswer2 = getRandomAnswer(correctAnswer);
+            while (incorrectAnswer2.equals(incorrectAnswer1))
+                incorrectAnswer2 = getRandomAnswer(correctAnswer);
 
             Question question = new Question(SplashScreenFragment.countryList.get(index).getCountryName(),
                     correctAnswer, incorrectAnswer1, incorrectAnswer2);

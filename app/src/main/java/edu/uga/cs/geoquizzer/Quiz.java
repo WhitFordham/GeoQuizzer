@@ -23,6 +23,7 @@ public class Quiz {
         this.currentScore = currentScore;
         this.numOfAnsweredQuestions = 0;
         this.questions = new ArrayList<>();
+        this.numOfAnsweredQuestions = 0;
     }
 
     public long getId() {
@@ -46,8 +47,12 @@ public class Quiz {
     }
 
     public void setCurrentScore(int score) {
-        this.currentScore += score;
+        this.currentScore = score;
     }
+
+    public void incrementScore() { ++this.currentScore; }
+
+    public void decrementScore() { --this.currentScore; }
 
     public ArrayList<Question> getQuestions() {
         return this.questions;
@@ -55,6 +60,14 @@ public class Quiz {
 
     public void setQuestions(ArrayList<Question> questions) {
         this.questions = questions;
+    }
+
+    public int getNumOfAnsweredQuestions() {
+        return this.numOfAnsweredQuestions;
+    }
+
+    public void setNumOfAnsweredQuestions(int numOfAnsweredQuestions) {
+        this.numOfAnsweredQuestions = numOfAnsweredQuestions;
     }
 
     public String toString() {
