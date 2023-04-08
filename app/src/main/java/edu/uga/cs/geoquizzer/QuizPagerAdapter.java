@@ -28,7 +28,11 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
     public Fragment createFragment(int position) {
         if (position == 6) {
             return ResultFragment.newInstance();
-        } else return QuestionFragment.newInstance(position);
+        } else if (position == 7) {
+            return QuizListFragment.newInstance();
+        } else {
+            return QuestionFragment.newInstance(position);
+        }
     }
 
     /**
@@ -37,7 +41,7 @@ public class QuizPagerAdapter extends FragmentStateAdapter {
      */
     @Override
     public int getItemCount() {
-        return 7;
+        return 8;
     }
 }
 

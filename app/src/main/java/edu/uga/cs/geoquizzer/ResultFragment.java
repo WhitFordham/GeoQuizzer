@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,23 +22,15 @@ import java.util.Date;
 
 /**
  * Class to show the results at the end of a quiz.
- *
+ * <p>
  * A simple {@link Fragment} subclass.
  * Use the {@link ResultFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
 public class ResultFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
     private CountriesData countriesData = new CountriesData(getActivity());
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private boolean isQuizStored = false;
 
     public ResultFragment() {
         // Required empty public constructor
@@ -57,8 +50,9 @@ public class ResultFragment extends Fragment {
 
     /**
      * Called when class is created.
+     *
      * @param savedInstanceState If the fragment is being re-created from
-     * a previous saved state, this is the state.
+     *                           a previous saved state, this is the state.
      */
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,7 +95,6 @@ public class ResultFragment extends Fragment {
         newQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                QuizActivity.newQuiz = null;
                 QuizActivity.pager.setCurrentItem(0, false);
                 ((QuizActivity) getActivity()).startNewQuiz();
                 getActivity().finish();
@@ -113,8 +106,7 @@ public class ResultFragment extends Fragment {
         prevResultsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentManager fragmentManager = getParentFragmentManager();
-                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, new QuizListFragment()).commit();
+                QuizActivity.pager.setCurrentItem(8);
             }
         });
 

@@ -30,7 +30,7 @@ public class QuizActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz);
         Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         String strDate = dateFormat.format(date);
 
         newQuiz = new Quiz(strDate, 0);
@@ -56,7 +56,7 @@ public class QuizActivity extends AppCompatActivity {
         String[] continentsList = new String[]{
                 "Europe",
                 "Asia",
-                "Australia",
+                "Oceania",
                 "North America",
                 "South America",
                 "Africa",

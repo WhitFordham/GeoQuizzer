@@ -15,7 +15,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Country Quiz"
+        android:text="GeoQuizzer"
         android:textColor="#6200ED"
         android:textSize="34sp"
         android:textStyle="bold"

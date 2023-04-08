@@ -60,7 +60,6 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
 
         public QuizHolder( View itemView ) {
             super( itemView );
-            Log.d("Ya", "Shwee");
             quizTitle = itemView.findViewById( R.id.QuizTextView );
             question1 = itemView.findViewById( R.id.question1 );
             question2 = itemView.findViewById( R.id.question2 );
@@ -90,20 +89,14 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
         Quiz quiz = values.get( position );
 
         holder.quizTitle.setText( quiz.getDate());
-        holder.question1.setText( quiz.getQuestions().get(0).getCountryName() + " " + quiz.getQuestions().get(0).getCorrectAnswer());
-        holder.question2.setText( quiz.getQuestions().get(1).getCountryName() + " " + quiz.getQuestions().get(1).getCorrectAnswer());
-        holder.question3.setText( quiz.getQuestions().get(2).getCountryName() + " " + quiz.getQuestions().get(2).getCorrectAnswer());
-        holder.question4.setText( quiz.getQuestions().get(3).getCountryName() + " " + quiz.getQuestions().get(3).getCorrectAnswer());
-        holder.question5.setText( quiz.getQuestions().get(4).getCountryName() + " " + quiz.getQuestions().get(4).getCorrectAnswer());
-        holder.question6.setText( quiz.getQuestions().get(5).getCountryName() + " " + quiz.getQuestions().get(5).getCorrectAnswer());
-        holder.results.setText(quiz.getCurrentScore());
+        holder.results.setText("Score: " + quiz.getCurrentScore() + "/6");
     }
 
     @Override
     public int getItemCount() {
-        if( values != null )
+        if( values != null ) {
             return values.size();
-        else
+        } else
             return 0;
     }
 }

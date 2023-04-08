@@ -129,7 +129,8 @@ public class SplashScreenFragment extends Fragment {
                 @Override
                 public void onClick(View v) {
                     FragmentManager fragmentManager = getParentFragmentManager();
-                    fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, new QuizListFragment()).commit();
+                    fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, new QuizListFragment()).
+                            addToBackStack(null).commit();
                 }
             });
         }
