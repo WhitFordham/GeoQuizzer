@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
               //  Log.d("Number of Countries", "Size: " + countryList.size());
                 Intent intent = new Intent();
-                intent.setClass(v.getContext(), QuizList.class);
+                intent.setClass(v.getContext(), QuizListFragment.class);
                 startActivity(intent);
             }
         });

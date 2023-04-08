@@ -1,9 +1,11 @@
 package edu.uga.cs.geoquizzer;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,11 +39,27 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
     public static class QuizHolder extends RecyclerView.ViewHolder {
 
         TextView quizTitle;
+        TextView question1;
+        TextView question2;
+        TextView question3;
+        TextView question4;
+        TextView question5;
+        TextView question6;
+        TextView results;
+
+
 
         public QuizHolder( View itemView ) {
             super( itemView );
 
             quizTitle = itemView.findViewById( R.id.QuizTextView );
+            question1 = itemView.findViewById( R.id.question1 );
+            question2 = itemView.findViewById( R.id.question2 );
+            question3 = itemView.findViewById( R.id.question3 );
+            question4 = itemView.findViewById( R.id.question4 );
+            question5 = itemView.findViewById( R.id.question5 );
+            question6 = itemView.findViewById( R.id.question6 );
+            results = itemView.findViewById( R.id.results );
         }
     }
 
@@ -53,6 +71,7 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
         // and false as the third parameter (don't attach to root).
         // Consequently, the parent view's (the RecyclerView) width will be used (match_parent).
         View view = LayoutInflater.from( parent.getContext()).inflate( R.layout.quiz, parent, false );
+
         return new QuizHolder( view );
     }
 
@@ -64,6 +83,12 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
       //  Log.d( DEBUG_TAG, "onBindViewHolder: " + quiz );
 
         holder.quizTitle.setText( quiz.getDate());
+        holder.question1.setText( quiz.getQuestions().get(0).getCountryName() + " " + quiz.getQuestions().get(0).getCorrectAnswer());
+        holder.question2.setText( quiz.getQuestions().get(1).getCountryName() + " " + quiz.getQuestions().get(1).getCorrectAnswer());
+        holder.question3.setText( quiz.getQuestions().get(2).getCountryName() + " " + quiz.getQuestions().get(2).getCorrectAnswer());
+        holder.question4.setText( quiz.getQuestions().get(3).getCountryName() + " " + quiz.getQuestions().get(3).getCorrectAnswer());
+        holder.question5.setText( quiz.getQuestions().get(4).getCountryName() + " " + quiz.getQuestions().get(4).getCorrectAnswer());
+        holder.question6.setText( quiz.getQuestions().get(5).getCountryName() + " " + quiz.getQuestions().get(5).getCorrectAnswer());
     }
 
     @Override
