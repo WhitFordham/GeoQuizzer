@@ -51,7 +51,7 @@ public class QuizListRecyclerAdapter extends RecyclerView.Adapter<QuizListRecycl
 
         public QuizHolder( View itemView ) {
             super( itemView );
-    Log.d("Ya", "Shwee");
+            Log.d("Ya", "Shwee");
             quizTitle = itemView.findViewById( R.id.QuizTextView );
             question1 = itemView.findViewById( R.id.question1 );
             question2 = itemView.findViewById( R.id.question2 );
