@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.fragment_splash_screen);
 
         Button newQuizButton = findViewById(R.id.button);
+        Button prevResultsButton = findViewById(R.id.button2);
 
         DatabaseHelper helper = DatabaseHelper.getInstance(getApplicationContext());
 
@@ -38,6 +39,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Number of Countries", "Size: " + countryList.size());
                 Intent intent = new Intent();
                 intent.setClass(v.getContext(), QuizActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        prevResultsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+              //  Log.d("Number of Countries", "Size: " + countryList.size());
+                Intent intent = new Intent();
+                intent.setClass(v.getContext(), QuizList.class);
                 startActivity(intent);
             }
         });
