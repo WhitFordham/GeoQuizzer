@@ -1,9 +1,11 @@
 package edu.uga.cs.geoquizzer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,24 +83,50 @@ public class SplashScreenFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        Date date = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
-        String strDate = dateFormat.format(date);
+        countryList = new ArrayList<>();
 
-        Button newQuizButton = view.findViewById(R.id.button);
-        Button prevResultsButton = view.findViewById(R.id.button2);
+        DatabaseHelper helper = DatabaseHelper.getInstance(getActivity());
+
+        helper.createDatabase();
+
+        new DatabaseReader().execute();
+    }
+
+    private class DatabaseReader extends AsyncTask<Void, List<Country>> {
+        private CountriesData countriesData = new CountriesData(getActivity());
+
+        @Override
+        protected List<Country> doInBackground(Void... params) {
+            countriesData.open();
+            List<Country> countries = countriesData.retrieveCountries();
+            return countries;
+        }
+
+        @Override
+        protected void onPostExecute(List<Country> countries) {
+            countryList.addAll(countries);
+            countriesData.close();
 
 
-        newQuizButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            Button newQuizButton = getView().findViewById(R.id.button);
+            Button prevResultsButton = getView().findViewById(R.id.button2);
 
-                Quiz newQuiz = new Quiz(strDate, 0);
-                int randomNum = (int) (Math.random() * (countryList.size() - 6)) + 0;
-                System.out.println(countryList.size());
+            newQuizButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setClass(v.getContext(), QuizActivity.class);
+                    startActivity(intent);
+                }
+            });
 
-            }
-        });
-
+            prevResultsButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    FragmentManager fragmentManager = getParentFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, new QuizListFragment()).commit();
+                }
+            });
+        }
     }
 }

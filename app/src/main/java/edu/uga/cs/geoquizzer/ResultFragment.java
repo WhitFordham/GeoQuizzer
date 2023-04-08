@@ -1,9 +1,11 @@
 package edu.uga.cs.geoquizzer;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,8 @@ public class ResultFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private CountriesData countriesData = new CountriesData(getActivity());
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -41,8 +45,6 @@ public class ResultFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
      * @return A new instance of fragment ResultFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -54,10 +56,6 @@ public class ResultFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -73,12 +71,52 @@ public class ResultFragment extends Fragment {
 
         TextView score = view.findViewById(R.id.textView2);
         score.setText("Your Score: " + QuizActivity.newQuiz.getCurrentScore() + "/6");
+
+        countriesData.open();
+        new DatabaseWriter().execute(QuizActivity.newQuiz);
+
+        TextView message = view.findViewById(R.id.textView6);
+
+        Quiz quiz = QuizActivity.newQuiz;
+        if (quiz.getCurrentScore() == 0 || quiz.getCurrentScore() == 1 || quiz.getCurrentScore() == 2) {
+            message.setText("Better luck next time!");
+        } else if (quiz.getCurrentScore() == 3 || quiz.getCurrentScore() == 4) {
+            message.setText("Good job!");
+        } else if (quiz.getCurrentScore() == 5) {
+            message.setText("Great job!");
+        } else if (quiz.getCurrentScore() == 6) {
+            message.setText("Flawless!");
+        }
+
+        Button newQuizButton = getView().findViewById(R.id.button4);
+        Button prevResultsButton = getView().findViewById(R.id.button3);
+
+        newQuizButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                QuizActivity.newQuiz = null;
+                QuizActivity.pager.setCurrentItem(0, false);
+                ((QuizActivity) getActivity()).startNewQuiz();
+                getActivity().finish();
+                Intent intent = new Intent(getContext(), QuizActivity.class);
+                getActivity().startActivity(intent);
+            }
+        });
+
+        prevResultsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getParentFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.fragmentContainerView, new QuizListFragment()).commit();
+            }
+        });
+
     }
 
     private class DatabaseWriter extends AsyncTask<Quiz, Quiz> {
         @Override
         protected Quiz doInBackground(Quiz... quizzes) {
-            SplashScreenFragment.countriesData.storeQuiz(quizzes[0]);
+            countriesData.storeQuiz(quizzes[0]);
             return quizzes[0];
         }
 
@@ -87,6 +125,7 @@ public class ResultFragment extends Fragment {
             // Show a quick confirmation message
             Toast.makeText(getActivity(), "Quiz created for " + quiz.getDate(),
                     Toast.LENGTH_SHORT).show();
+            countriesData.close();
         }
     }
 }

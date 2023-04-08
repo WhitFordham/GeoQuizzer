@@ -81,6 +81,7 @@ public class QuestionFragment extends Fragment {
         RadioButton choice2 = view.findViewById(R.id.radioButton2);
         RadioButton choice3 = view.findViewById(R.id.radioButton3);
 
+
         Random random = new Random();
         int correctChoice = random.nextInt(3) + 1;
         RadioButton correctButton = choice1;
@@ -104,6 +105,7 @@ public class QuestionFragment extends Fragment {
 
         final RadioButton userChoice = correctButton;
         RadioGroup radioGroup = view.findViewById(R.id.radioGroup);
+
         radioGroup.setOnCheckedChangeListener((group, button) -> {
             RadioButton selectedButton = view.findViewById(button);
 
@@ -122,38 +124,4 @@ public class QuestionFragment extends Fragment {
             Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
         }
     }
-
-    /*
-    Used in different fragments
-    private class DatabaseReader extends AsyncTask<Void, List<Quiz>> {
-        List<Quiz> quizResults = new ArrayList<>();
-
-        @Override
-        protected List<Quiz> doInBackground(Void... params) {
-            List<Quiz> quizzes = SplashScreenFragment.countriesData.retrieveQuizzes();
-            return quizzes;
-        }
-
-        @Override
-        protected void onPostExecute(List<Quiz> quizList) {
-            quizResults.addAll(quizList);
-            SplashScreenFragment.countriesData.close();
-        }
-    }
-
-    private class DatabaseWriter extends AsyncTask<Quiz, Quiz> {
-        @Override
-        protected Quiz doInBackground(Quiz... quizzes) {
-            SplashScreenFragment.countriesData.storeQuiz(quizzes[0]);
-            return quizzes[0];
-        }
-
-        @Override
-        protected void onPostExecute(Quiz quiz) {
-            // Show a quick confirmation message
-            Toast.makeText(getActivity(), "Job lead created for " + quiz.getDate(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-     */
 }

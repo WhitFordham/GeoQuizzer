@@ -70,7 +70,9 @@ public class QuizListFragment extends Fragment {
         recyclerView.setLayoutManager( layoutManager );
 
         quizList = new ArrayList<Quiz>();
+        recyclerAdapter = new QuizListRecyclerAdapter(getActivity(), quizList);
 
+        recyclerView.setAdapter(recyclerAdapter);
         // Create a JobLeadsData instance, since we will need to save a new JobLead to the dn.
         // Note that even though more activites may create their own instances of the JobLeadsData
         // class, we will be using a single instance of the JobLeadsDBHelper object, since
@@ -84,12 +86,12 @@ public class QuizListFragment extends Fragment {
 
         // Execute the retrieval of the job leads in an asynchronous way,
         // without blocking the main UI thread.
-        new QuizDBReader().execute();
+        new DatabaseReader().execute();
 
     }
 
     // This is an AsyncTask class (it extends AsyncTask) to perform DB reading of job leads, asynchronously.
-    private class QuizDBReader extends AsyncTask<Void, List<Quiz>> {
+    private class DatabaseReader extends AsyncTask<Void, List<Quiz>> {
 
         // This method will run as a background process to read from db.
         // It returns a list of retrieved JobLead objects.
