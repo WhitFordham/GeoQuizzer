@@ -52,7 +52,6 @@ public class QuestionFragment extends Fragment {
     // TODO: Rename and change types and number of parameters
     public static QuestionFragment newInstance(int questionNumber) {
         QuizActivity.newQuiz.setNumOfAnsweredQuestions(questionNumber);
-        Log.d("Number", "Question " + questionNumber);
         QuestionFragment fragment = new QuestionFragment();
         Bundle args = new Bundle();
         args.putInt("questionNum", questionNumber);
@@ -128,8 +127,6 @@ public class QuestionFragment extends Fragment {
             choice3.setText(savedInstanceState.getString("choice3"));
             correctChoice = savedInstanceState.getInt("correctChoice");
             isIncremented = savedInstanceState.getBoolean("isCorrect");
-            Log.d("Message", "Right: " + isIncremented);
-
             if (isIncremented) {
                 QuizActivity.newQuiz.decrementScore();
             }
@@ -165,13 +162,11 @@ public class QuestionFragment extends Fragment {
             if (selectedButton == userChoice) {
                 isIncremented = true;
                 QuizActivity.newQuiz.incrementScore();
-                Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
             } else {
                 if (QuizActivity.newQuiz.getCurrentScore() > score) {
                     QuizActivity.newQuiz.decrementScore();
                     isIncremented = false;
                 }
-                Log.d("Message", "Score: " + QuizActivity.newQuiz.getCurrentScore());
             }
         });
 

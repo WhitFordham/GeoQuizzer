@@ -45,7 +45,6 @@ public class CountriesData {
     public void open() {
 
         database = databaseHelper.getWritableDatabase();
-        Log.d("asedrfetg", database.getPath());
     }
 
     /**

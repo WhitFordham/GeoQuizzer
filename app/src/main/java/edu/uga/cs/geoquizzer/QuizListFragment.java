@@ -128,8 +128,6 @@ public class QuizListFragment extends Fragment {
         protected List<Quiz> doInBackground( Void... params ) {
             List<Quiz> quizList = countryData.retrieveQuizzes();
 
-            Log.d( TAG, "JobLeadDBReader: Job leads retrieved: " + quizList.size() );
-
             return quizList;
         }
 
@@ -139,7 +137,6 @@ public class QuizListFragment extends Fragment {
         // onPostExecute is like the notify method in an asynchronous method call discussed in class.
         @Override
         protected void onPostExecute( List<Quiz> qList ) {
-            Log.d( TAG, "DBReader: qList.size(): " + qList.size() );
             quizList.addAll( qList );
 
             // create the RecyclerAdapter and set it for the RecyclerView
@@ -155,7 +152,6 @@ public class QuizListFragment extends Fragment {
         // Open the database
         if( countryData != null && !countryData.isOpen() ) {
             countryData.open();
-            Log.d( TAG, "QuizListFragment.onResume(): opening DB" );
         }
 
         // Update the app name in the Action Bar to be the same as the app's name
